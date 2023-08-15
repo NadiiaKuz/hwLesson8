@@ -2,6 +2,7 @@
 {
     struct Temperature
     {
+        public bool IsEmpty { get; } = true;
         public DateTime Date { get; }
         public float Celsius { get; }
         public float Fahrenheit { get; }
@@ -13,6 +14,7 @@
             Celsius = celsius;
             Fahrenheit = (float)(celsius * 1.8) + 32;
             Kelvin = (float)celsius + 273.15F;
+            IsEmpty = false;
         }
 
         public string GetInformation() =>

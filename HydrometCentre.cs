@@ -17,20 +17,7 @@
         public Temperature[] this[DateTime start, DateTime end]
         {
             get => GetTemperaturesByPeriod(start, end);
-        }
-
-        private int GetIndex(DateTime date)
-        {
-            for (int i = 0; i < temperatures.Length; i++)
-            {
-                if (temperatures[i].Date.Date == date.Date)
-                {
-                    return i;
-                }
-            }
-
-            return -1;
-        }
+        }        
 
         private Temperature GetTemperatureByDate(DateTime date)
         {
@@ -47,23 +34,32 @@
 
         private Temperature[] GetTemperaturesByPeriod(DateTime start, DateTime end)
         {
-            int startPos = GetIndex(start);
+            if (end < start)
+                return Array.Empty<Temperature>();  
 
-            if (startPos == -1)
-                return Array.Empty<Temperature>();
-
-            int endPos = GetIndex(end);
-
-            if (endPos == -1)
-                return Array.Empty<Temperature>();
-
-            Temperature[] temp = new Temperature[endPos - startPos + 1];
-            for (int i = 0; i < temp.Length; i++)
+            int count = 0;
+            for (int i = 0; i < temperatures.Length; i++)
             {
-                temp[i] = temperatures[startPos + i];
+                if (!temperatures[i].IsEmpty && temperatures[i].Date >= start && temperatures[i].Date <= end)
+                {
+                    count++;
+                }
             }
 
-            return temp;
+            if (count == 0)
+            {
+                return Array.Empty<Temperature>();  
+            }
+
+            var tempArray = new Temperature[count];
+
+            for (int i = 0; i < temperatures.Length; i++)
+            {
+                if (!temperatures[i].IsEmpty && temperatures[i].Date >= start && temperatures[i].Date <= end)
+                    tempArray[--count] = temperatures[i];   
+            }
+
+            return tempArray;
         }
     }
 }
