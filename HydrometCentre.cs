@@ -23,7 +23,7 @@
         {
             for (int i = 0; i < temperatures.Length; i++)
             {
-                if (temperatures[i].Date == date)
+                if (temperatures[i].Date.Date == date.Date)
                 {
                     return i;
                 }
@@ -36,7 +36,7 @@
         {
             for (int i = 0; i < temperatures.Length; i++)
             {
-                if (temperatures[i].Date == date)
+                if (temperatures[i].Date.Date == date.Date)
                 {
                     return temperatures[i];
                 }

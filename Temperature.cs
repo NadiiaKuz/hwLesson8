@@ -3,16 +3,16 @@
     struct Temperature
     {
         public DateTime Date { get; }
-        public double Celsius { get; }
-        public double Fahrenheit { get; }
-        public double Kelvin { get; }
+        public float Celsius { get; }
+        public float Fahrenheit { get; }
+        public float Kelvin { get; }
 
-        public Temperature(DateTime date, double celsius)
+        public Temperature(DateTime date, float celsius)
         {
             Date = date;
             Celsius = celsius;
-            Fahrenheit = (celsius * 1.8) + 32;
-            Kelvin = celsius + 273.15;
+            Fahrenheit = (float)(celsius * 1.8) + 32;
+            Kelvin = (float)celsius + 273.15F;
         }
 
         public string GetInformation() =>
