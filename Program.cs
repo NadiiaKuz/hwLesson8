@@ -20,8 +20,8 @@
 
             Console.WriteLine(new string('-', 20));
 
-            DateTime startDate = new DateTime(2023, 3, 13);
-            DateTime endDate = new DateTime(2023, 3, 15, 12, 4, 33);
+            DateTime startDate = new DateTime(2023, 3, 14);
+            DateTime endDate = new DateTime(2023, 3, 18);
 
             var result = hydrometCentre[startDate, endDate];
 

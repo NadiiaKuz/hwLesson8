@@ -19,19 +19,6 @@
             get => GetTemperaturesByPeriod(start, end);
         }
 
-        private int GetIndex(DateTime date)
-        {
-            for (int i = 0; i < temperatures.Length; i++)
-            {
-                if (temperatures[i].Date.Date == date.Date)
-                {
-                    return i;
-                }
-            }
-
-            return -1;
-        }
-
         private Temperature GetTemperatureByDate(DateTime date)
         {
             for (int i = 0; i < temperatures.Length; i++)
@@ -47,23 +34,28 @@
 
         private Temperature[] GetTemperaturesByPeriod(DateTime start, DateTime end)
         {
-            int startPos = GetIndex(start);
-
-            if (startPos == -1)
+            if (end < start)
                 return Array.Empty<Temperature>();
 
-            int endPos = GetIndex(end);
+            int count = 0;
 
-            if (endPos == -1)
-                return Array.Empty<Temperature>();
-
-            Temperature[] temp = new Temperature[endPos - startPos + 1];
-            for (int i = 0; i < temp.Length; i++)
+            for (int i = 0; i < temperatures.Length; i++)
             {
-                temp[i] = temperatures[startPos + i];
+                if (temperatures[i].Date.Date >= start.Date && temperatures[i].Date.Date <= end.Date && !temperatures[i].IsEmpty)
+                    count++;
             }
 
-            return temp;
+            if (count == 0)
+                return Array.Empty<Temperature>();
+
+            Temperature[] temp = new Temperature[count];
+            for (int i = 0; i < temperatures.Length; i++)
+            {
+                if (temperatures[i].Date.Date >= start.Date && temperatures[i].Date.Date <= end.Date && !temperatures[i].IsEmpty)
+                    temp[--count] = temperatures[i];
+            }
+
+            return temp.OrderBy(x => x.Date).ToArray();
         }
     }
 }
